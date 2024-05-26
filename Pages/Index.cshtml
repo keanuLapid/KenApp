@@ -1,0 +1,56 @@
+﻿@page
+@model Index
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+</div>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">
+                Name
+                <div class="btn-group" role="group" aria-label="">
+                    <a href="~/index?sortBy=name&sortAsc=false" type="button" class="btn btn-secondary"><i class="bi bi-arrow-bar-down"></i></a>
+                    <a href="~/index?sortBy=name&sortAsc=true" type="button" class="btn btn-secondary"><i class="bi bi-arrow-bar-up"></i></a>
+                </div>
+            </th>
+            <th scope="col">
+                Industry
+                <div class="btn-group" role="group" aria-label="">
+                    <a href="~/index?sortBy=industry&sortAsc=false" type="button" class="btn btn-secondary"><i class="bi bi-arrow-bar-down"></i></a>
+                    <a href="~/index?sortBy=industry&sortAsc=true" type="button" class="btn btn-secondary"><i class="bi bi-arrow-bar-up"></i></a>
+                </div>
+            </th>
+            <th scope="col">
+                Location
+                <div class="btn-group" role="group" aria-label="">
+                    <a href="~/index?sortBy=location&sortAsc=false" type="button" class="btn btn-secondary"><i class="bi bi-arrow-bar-down"></i></a>
+                    <a href="~/index?sortBy=location&sortAsc=true" type="button" class="btn btn-secondary"><i class="bi bi-arrow-bar-up"></i></a>
+                </div>
+            </th>
+            <th scope="col">
+                Employees
+                <div class="btn-group" role="group" aria-label="">
+                    <a href="~/index?sortBy=employees&sortAsc=false" type="button" class="btn btn-secondary"><i class="bi bi-arrow-bar-down"></i></a>
+                    <a href="~/index?sortBy=employees&sortAsc=true" type="button" class="btn btn-secondary"><i class="bi bi-arrow-bar-up"></i></a>
+                </div>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var company in Model.Companies)
+        {
+            <tr>
+                <td>@company.Name</td>
+                <td>@company.Industry</td>
+                <td>@company.Location</td>
+                <td>@company.Employees</td>
+            </tr>
+        }
+    </tbody>
+</table>
