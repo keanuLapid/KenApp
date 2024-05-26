@@ -18,13 +18,13 @@ namespace KenApp.Pages
 
         public List<Company> Companies { get; set; }
 
-        // Properties for sorting
-        public string SortBy { get; set; }
-        public bool SortAsc { get; set; }
+        [BindProperty]
+        public SearchParameters SearchParams { get; set; }
 
         public void OnGet(string sortBy = null, bool? sortAsc = null)
         {
             List<Company> companies = new List<Company>()
+            
             {
                 new Company {
                     Name = "Tech Solutions",
@@ -118,24 +118,27 @@ namespace KenApp.Pages
                 }
             };
 
-            SortBy = sortBy;
-            SortAsc = sortAsc ?? true;
-
-            if (!string.IsNullOrEmpty(SortBy))
+            SearchParams = new SearchParameters
             {
-                switch (SortBy.ToLower())
+                SortBy = sortBy,
+                SortAsc = sortAsc ?? true
+            };
+
+            if (!string.IsNullOrEmpty(SearchParams.SortBy))
+            {
+                switch (SearchParams.SortBy.ToLower())
                 {
                     case "name":
-                        Companies = SortAsc ? companies.OrderBy(c => c.Name).ToList() : companies.OrderByDescending(c => c.Name).ToList();
+                        Companies = SearchParams.SortAsc ? companies.OrderBy(c => c.Name).ToList() : companies.OrderByDescending(c => c.Name).ToList();
                         break;
                     case "industry":
-                        Companies = SortAsc ? companies.OrderBy(c => c.Industry).ToList() : companies.OrderByDescending(c => c.Industry).ToList();
+                        Companies = SearchParams.SortAsc ? companies.OrderBy(c => c.Industry).ToList() : companies.OrderByDescending(c => c.Industry).ToList();
                         break;
                     case "location":
-                        Companies = SortAsc ? companies.OrderBy(c => c.Location).ToList() : companies.OrderByDescending(c => c.Location).ToList();
+                        Companies = SearchParams.SortAsc ? companies.OrderBy(c => c.Location).ToList() : companies.OrderByDescending(c => c.Location).ToList();
                         break;
                     case "employees":
-                        Companies = SortAsc ? companies.OrderBy(c => c.Employees).ToList() : companies.OrderByDescending(c => c.Employees).ToList();
+                        Companies = SearchParams.SortAsc ? companies.OrderBy(c => c.Employees).ToList() : companies.OrderByDescending(c => c.Employees).ToList();
                         break;
                     default:
                         Companies = companies;
@@ -154,6 +157,18 @@ namespace KenApp.Pages
             public string Industry { get; set; }
             public string Location { get; set; }
             public int Employees { get; set; }
+        }
+
+        public class SearchParameters
+        {
+            public string SortBy { get; set; }
+            public bool SortAsc { get; set; }
+            public string SearchBy { get; set; }
+            public string Keyword { get; set; }
+            public int PageSize { get; set; } = 5;
+            public int PageIndex { get; set; } = 1;
+            public int PageCount { get; set; }
+            public int SearchCount { get; set; }
         }
     }
 }
