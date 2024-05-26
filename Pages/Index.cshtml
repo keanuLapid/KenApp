@@ -1,5 +1,6 @@
 ﻿@page
-@model Index
+@model KenApp.Pages.IndexModel
+
 @{
     ViewData["Title"] = "Home page";
 }
@@ -15,29 +16,29 @@
             <th scope="col">
                 Name
                 <div class="btn-group" role="group" aria-label="">
-                    <a href="~/index?sortBy=name&sortAsc=false" type="button" class="btn btn-secondary"><i class="bi bi-arrow-bar-down"></i></a>
-                    <a href="~/index?sortBy=name&sortAsc=true" type="button" class="btn btn-secondary"><i class="bi bi-arrow-bar-up"></i></a>
+                    <a asp-page="./Index" asp-route-sortBy="name" asp-route-sortAsc="false" type="button" class="btn btn-secondary">&lt;</a>
+                    <a asp-page="./Index" asp-route-sortBy="name" asp-route-sortAsc="true" type="button" class="btn btn-secondary">&gt;</a>
                 </div>
             </th>
             <th scope="col">
                 Industry
                 <div class="btn-group" role="group" aria-label="">
-                    <a href="~/index?sortBy=industry&sortAsc=false" type="button" class="btn btn-secondary"><i class="bi bi-arrow-bar-down"></i></a>
-                    <a href="~/index?sortBy=industry&sortAsc=true" type="button" class="btn btn-secondary"><i class="bi bi-arrow-bar-up"></i></a>
+                    <a asp-page="./Index" asp-route-sortBy="industry" asp-route-sortAsc="false" type="button" class="btn btn-secondary">&lt;</a>
+                    <a asp-page="./Index" asp-route-sortBy="industry" asp-route-sortAsc="true" type="button" class="btn btn-secondary">&gt;</a>
                 </div>
             </th>
             <th scope="col">
                 Location
                 <div class="btn-group" role="group" aria-label="">
-                    <a href="~/index?sortBy=location&sortAsc=false" type="button" class="btn btn-secondary"><i class="bi bi-arrow-bar-down"></i></a>
-                    <a href="~/index?sortBy=location&sortAsc=true" type="button" class="btn btn-secondary"><i class="bi bi-arrow-bar-up"></i></a>
+                    <a asp-page="./Index" asp-route-sortBy="location" asp-route-sortAsc="false" type="button" class="btn btn-secondary">&lt;</a>
+                    <a asp-page="./Index" asp-route-sortBy="location" asp-route-sortAsc="true" type="button" class="btn btn-secondary">&gt;</a>
                 </div>
             </th>
             <th scope="col">
                 Employees
                 <div class="btn-group" role="group" aria-label="">
-                    <a href="~/index?sortBy=employees&sortAsc=false" type="button" class="btn btn-secondary"><i class="bi bi-arrow-bar-down"></i></a>
-                    <a href="~/index?sortBy=employees&sortAsc=true" type="button" class="btn btn-secondary"><i class="bi bi-arrow-bar-up"></i></a>
+                    <a asp-page="./Index" asp-route-sortBy="employees" asp-route-sortAsc="false" type="button" class="btn btn-secondary">&lt;</a>
+                    <a asp-page="./Index" asp-route-sortBy="employees" asp-route-sortAsc="true" type="button" class="btn btn-secondary">&gt;</a>
                 </div>
             </th>
         </tr>

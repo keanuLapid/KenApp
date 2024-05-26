@@ -1,20 +1,27 @@
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.Extensions.Logging;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace KenApp.Pages
 {
-    public class Index : PageModel
+    public class IndexModel : PageModel
     {
-        private readonly ILogger<Index> _logger;
+        private readonly ILogger<IndexModel> _logger;
 
-        public Index(ILogger<Index> logger)
+        public IndexModel(ILogger<IndexModel> logger)
         {
             _logger = logger;
         }
 
         public List<Company> Companies { get; set; }
 
-        public void OnGet(string? sortBy = null, string? sortAsc = "true")
+        // Properties for sorting
+        public string SortBy { get; set; }
+        public bool SortAsc { get; set; }
+
+        public void OnGet(string sortBy = null, bool? sortAsc = null)
         {
             List<Company> companies = new List<Company>()
             {
@@ -110,29 +117,41 @@ namespace KenApp.Pages
                 }
             };
 
-            if (sortBy == null || sortAsc == null)
+            SortBy = sortBy;
+            SortAsc = sortAsc ?? true;
+
+            if (!string.IsNullOrEmpty(SortBy))
             {
-                this.Companies = companies;
-                return;
+                switch (SortBy.ToLower())
+                {
+                    case "name":
+                        Companies = SortAsc ? companies.OrderBy(c => c.Name).ToList() : companies.OrderByDescending(c => c.Name).ToList();
+                        break;
+                    case "industry":
+                        Companies = SortAsc ? companies.OrderBy(c => c.Industry).ToList() : companies.OrderByDescending(c => c.Industry).ToList();
+                        break;
+                    case "location":
+                        Companies = SortAsc ? companies.OrderBy(c => c.Location).ToList() : companies.OrderByDescending(c => c.Location).ToList();
+                        break;
+                    case "employees":
+                        Companies = SortAsc ? companies.OrderBy(c => c.Employees).ToList() : companies.OrderByDescending(c => c.Employees).ToList();
+                        break;
+                    default:
+                        Companies = companies;
+                        break;
+                }
             }
-
-            bool ascending = sortAsc.ToLower() == "true";
-
-            this.Companies = sortBy.ToLower() switch
+            else
             {
-                "name" => ascending ? companies.OrderBy(c => c.Name).ToList() : companies.OrderByDescending(c => c.Name).ToList(),
-                "industry" => ascending ? companies.OrderBy(c => c.Industry).ToList() : companies.OrderByDescending(c => c.Industry).ToList(),
-                "location" => ascending ? companies.OrderBy(c => c.Location).ToList() : companies.OrderByDescending(c => c.Location).ToList(),
-                "employees" => ascending ? companies.OrderBy(c => c.Employees).ToList() : companies.OrderByDescending(c => c.Employees).ToList(),
-                _ => companies
-            };
+                Companies = companies;
+            }
         }
 
         public class Company
         {
-            public string? Name { get; set; }
-            public string? Industry { get; set; }
-            public string? Location { get; set; }
+            public string Name { get; set; }
+            public string Industry { get; set; }
+            public string Location { get; set; }
             public int Employees { get; set; }
         }
     }
